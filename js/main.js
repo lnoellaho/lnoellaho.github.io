@@ -1,69 +1,64 @@
 $(window).load(function(){
-     $('.preloader').fadeOut('slow');
+	$('#preloader').fadeOut('slow',function(){$(this).remove();});
 });
 
 
-/* =Main INIT Function
--------------------------------------------------------------- */
-function initializeSite() {
-
-	"use strict";
-
-	//OUTLINE DIMENSION AND CENTER
-	(function() {
-	    function centerInit(){
-
-			var sphereContent = $('.sphere'),
-				sphereHeight = sphereContent.height(),
-				parentHeight = $(window).height(),
-				topMargin = (parentHeight - sphereHeight) / 2;
-
-			sphereContent.css({
-				"margin-top" : topMargin+"px"
-			});
-
-			var heroContent = $('.hero'),
-				heroHeight = heroContent.height(),
-				heroTopMargin = (parentHeight - heroHeight) / 2;
-
-			heroContent.css({
-				"margin-top" : heroTopMargin+"px"
-			});
-
-	    }
-
-	    $(document).ready(centerInit);
-		$(window).resize(centerInit);
-	})();
-
-	// Init effect
-	$('#scene').parallax();
-
-};
-/* END ------------------------------------------------------- */
-
-/* =Document Ready Trigger
--------------------------------------------------------------- */
-$(window).load(function(){
-
-	initializeSite();
-	(function() {
-		setTimeout(function(){window.scrollTo(0,0);},0);
-	})();
-
+/******************************************************************************************************************************
+Learn More Page Scroll
+*******************************************************************************************************************************/
+$(function() {
+    $('a.page-scroll').bind('click', function(event) {
+        var $anchor = $(this);
+        $('html, body').stop().animate({
+            scrollTop: $($anchor.attr('href')).offset().top
+        }, 1500, 'easeInOutExpo');
+        event.preventDefault();
+    });
 });
-/* END ------------------------------------------------------- */
 
+/******************************************************************************************************************************
+Menu
+*******************************************************************************************************************************/ 
+(function() {
 
-$('#countdown').countdown({
-	date: "March 19, 2018 00:00:01",
-	render: function(data) {
-	  var el = $(this.el);
-	  el.empty()
-	    //.append("<div>" + this.leadingZeros(data.years, 4) + "<span>years</span></div>")
-	    .append("<div>" + this.leadingZeros(data.days, 2) + " <span>days</span></div>")
-	    .append("<div>" + this.leadingZeros(data.hours, 2) + " <span>hrs</span></div>")
-	    .append("<div>" + this.leadingZeros(data.min, 2) + " <span>min</span></div>")
-	    .append("<div>" + this.leadingZeros(data.sec, 2) + " <span>sec</span></div>");
+	var bodyEl = document.body,
+		//content = document.querySelector( '.content-wrap' ),
+		openbtn = document.getElementById( 'open-button' ),
+		closebtn = document.getElementById( 'close-button' ),
+		isOpen = false;
+
+	function init() {
+		initEvents();
 	}
-});
+
+	function initEvents() {
+		openbtn.addEventListener( 'click', toggleMenu );
+		if( closebtn ) {
+			closebtn.addEventListener( 'click', toggleMenu );
+		}
+
+		/* close the menu element if the target it´s not the menu element or one of its descendants..
+		content.addEventListener( 'click', function(ev) {
+			var target = ev.target;
+			if( isOpen && target !== openbtn ) {
+				toggleMenu();
+			}
+		} );
+		*/
+	}
+
+	function toggleMenu() {
+		if( isOpen ) {
+			classie.remove( bodyEl, 'show-menu' );
+		}
+		else {
+			classie.add( bodyEl, 'show-menu' );
+		}
+		isOpen = !isOpen;
+	}
+
+	init();
+
+})();
+
+

@@ -1,2 +1,2 @@
-# lnoellaho.github.io
-portfolio website
+# Leeann Ho
+Portfolio Website
